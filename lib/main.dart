@@ -52,9 +52,34 @@ class _HomeState extends State<Home> {
                     ),
                   );
                 } else {
-                  return Container(
-                    color: Colors.green,
-                  );
+                  var currencies = List<Widget>();
+                  currencies.add(Icon(
+                    Icons.monetization_on,
+                    color: Colors.amber,
+                    size: 150.0,
+                  ));
+                  print(snapshot.data["results"]["currencies"]);
+                  snapshot.data["results"]["currencies"]
+                      .forEach((key, currency) => (key == "source")
+                          ? currencies.add(TextField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  labelText: "Reais",
+                                  labelStyle: TextStyle(color: Colors.amber),
+                                  border: OutlineInputBorder()),
+                            ))
+                          : currencies.add(TextField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  labelText: currency["name"],
+                                  labelStyle: TextStyle(color: Colors.amber),
+                                  border: OutlineInputBorder()),
+                            )));
+                  return SingleChildScrollView(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: currencies,
+                  ));
                 }
             }
           },
